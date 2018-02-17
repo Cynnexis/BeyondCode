@@ -1,7 +1,5 @@
 package fr.berger.beyondcode.util;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.util.Objects;
 import java.util.Random;
 
 public class Irregular {
