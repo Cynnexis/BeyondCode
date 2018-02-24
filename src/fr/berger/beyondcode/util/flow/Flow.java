@@ -2,7 +2,6 @@ package fr.berger.beyondcode.util.flow;
 
 import fr.berger.beyondcode.annotations.NotEmpty;
 import fr.berger.beyondcode.annotations.Positive;
-import fr.berger.beyondcode.exceptions.NonPositiveValueException;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -19,18 +18,32 @@ public class Flow extends ArrayList<Row> {
 	private String path;
 	@NotNull
 	private ArrayList<String> headers;
-	@Positive(strictly = false)
-	private int numberOfColumns;
+	@NotNull
+	private RowTemplate columns;
 	
+	public Flow(@NotNull @NotEmpty String name, @NotNull @NotEmpty String path, @NotNull ArrayList<String> headers, @NotNull RowTemplate columns, @Positive(strictly = false) int initialCapacity) {
+		super(initialCapacity);
+		
+		setName(name);
+		setPath(path);
+		setHeaders(headers);
+		setColumns(columns);
+	}
+	public Flow(@NotNull @NotEmpty String name, @NotNull @NotEmpty String path, @NotNull ArrayList<String> headers, @NotNull RowTemplate columns) {
+		this(name, path, headers, columns, 5);
+	}
+	public Flow(@NotNull @NotEmpty String name, @NotNull ArrayList<String> headers, @NotNull RowTemplate columns) {
+		this(name, "", headers, columns, 5);
+	}
+	public Flow(@NotNull @NotEmpty String name, @NotNull RowTemplate columns) {
+		this(name, "", new ArrayList<>(10), columns, 5);
+	}
 	public Flow() {
-		super(5);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy-HHmmss");
-		
-		setName("Flow-NoTitle-" + sdf.format(new Date()));
-		setPath(name + ".cvs");
-		setHeaders(new ArrayList<>(10));
-		setNumberOfColumns(0);
+		this("Flow-NoTitle-" + new SimpleDateFormat("ddMMyyyy-HHmmss").format(new Date()),
+				"",
+				new ArrayList<>(10),
+				new RowTemplate(),
+				5);
 	}
 	
 	public boolean generateFile() {
@@ -64,6 +77,13 @@ public class Flow extends ArrayList<Row> {
 		if (path.equals(""))
 			throw new IllegalArgumentException();
 		
+		if (!path.endsWith(getName() + ".cvs")) {
+			if (path.endsWith(getName()))
+				path += ".cvs";
+			else
+				path += getName() + ".cvs";
+		}
+		
 		this.path = path;
 	}
 	
@@ -78,14 +98,27 @@ public class Flow extends ArrayList<Row> {
 		this.headers = headers;
 	}
 	
-	public int getNumberOfColumns() {
-		return numberOfColumns;
+	public @NotNull RowTemplate getColumns() {
+		return columns;
 	}
 	
-	public void setNumberOfColumns(int numberOfColumns) {
-		if (numberOfColumns < 0)
-			throw new NonPositiveValueException();
+	public void setColumns(@NotNull RowTemplate columns) {
+		if (columns == null)
+			throw new NullPointerException();
 		
-		this.numberOfColumns = numberOfColumns;
+		this.columns = columns;
+	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public boolean add(@NotNull Row row) {
+		if (row == null)
+			throw new NullPointerException();
+		
+		if (columns.assertRow(row))
+			return super.add(row);
+		else
+			return false;
 	}
 }
