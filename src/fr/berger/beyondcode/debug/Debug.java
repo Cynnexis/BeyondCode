@@ -1,5 +1,6 @@
 package fr.berger.beyondcode.debug;
 
+import fr.berger.beyondcode.annotations.Positive;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
@@ -73,7 +74,7 @@ public class Debug {
 			String message = "";
 			
 			if (isPrintFunctionName())
-				message = getCurrentFunctionName() + "> ";
+				message = getCurrentFunctionName(3) + "> ";
 			
 			message += msg;
 			
@@ -98,9 +99,19 @@ public class Debug {
 	 * Try to get the name of the function where this method is called.
 	 * @return The name of the method (in its package).
 	 */
-	private static String getCurrentFunctionName() {
-		if (Thread.currentThread().getStackTrace().length >= 5)
-			return Thread.currentThread().getStackTrace()[4].toString();
+	public static String getCurrentFunctionName(@Positive(strictly = false) int level) {
+		if (Thread.currentThread().getStackTrace().length >= level + 2)
+			return Thread.currentThread().getStackTrace()[level + 1].toString();
+		
+		return Thread.currentThread().getStackTrace()[Thread.currentThread().getStackTrace().length-1].toString();
+	}
+	/**
+	 * Try to get the name of the function where this method is called.
+	 * @return The name of the method (in its package).
+	 */
+	public static String getCurrentFunctionName() {
+		if (Thread.currentThread().getStackTrace().length >= 3)
+			return Thread.currentThread().getStackTrace()[2].toString();
 		
 		return Thread.currentThread().getStackTrace()[Thread.currentThread().getStackTrace().length-1].toString();
 	}
@@ -109,9 +120,19 @@ public class Debug {
 	 * Return the name of the function where this method is called, without the package and class name before.
 	 * @return
 	 */
-	private static String getCurrentFunctionSimpleName() {
-		if (Thread.currentThread().getStackTrace().length >= 5)
-			return Thread.currentThread().getStackTrace()[4].getMethodName();
+	public static String getCurrentFunctionSimpleName(int level) {
+		if (Thread.currentThread().getStackTrace().length >= level + 2)
+			return Thread.currentThread().getStackTrace()[level + 1].getMethodName();
+		
+		return Thread.currentThread().getStackTrace()[Thread.currentThread().getStackTrace().length-1].getMethodName();
+	}
+	/**
+	 * Return the name of the function where this method is called, without the package and class name before.
+	 * @return
+	 */
+	public static String getCurrentFunctionSimpleName() {
+		if (Thread.currentThread().getStackTrace().length >= 3)
+			return Thread.currentThread().getStackTrace()[2].getMethodName();
 		
 		return Thread.currentThread().getStackTrace()[Thread.currentThread().getStackTrace().length-1].getMethodName();
 	}

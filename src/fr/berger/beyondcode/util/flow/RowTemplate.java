@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class RowTemplate extends ArrayList<Class<?>> {
 	
 	public RowTemplate(@Nullable Class<?>... classes) {
