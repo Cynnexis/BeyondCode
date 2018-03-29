@@ -16,10 +16,10 @@ public class Irregular {
 	
 	public static <T> Object range(Class<T> clazz, double min, boolean minIncluded, double max, boolean maxIncluded) {
 		if (!minIncluded)
-			min = Math.ceil(min);
+			min = Math.ceil(++min);
 		
 		if (!maxIncluded)
-			max = Math.floor(max);
+			max = Math.floor(--max);
 		
 		if (min > max)
 			throw new IllegalArgumentException("min must be lesser than max");

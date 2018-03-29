@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BeyondCode">
+    <output-path>$PROJECT_DIR$/out/artifacts/BeyondCode</output-path>
+    <root id="archive" name="BeyondCode.jar">
+      <element id="module-output" name="BeyondCode" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

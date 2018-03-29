@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Deprecated
 public class Flow extends ArrayList<Row> {
 	
 	@NotNull
@@ -110,7 +111,7 @@ public class Flow extends ArrayList<Row> {
 	}
 	
 	/* OVERRIDES */
-	
+	/*
 	@Override
 	public boolean add(@NotNull Row row) {
 		if (row == null)
@@ -120,5 +121,5 @@ public class Flow extends ArrayList<Row> {
 			return super.add(row);
 		else
 			return false;
-	}
+	}*/
 }

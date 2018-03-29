@@ -15,7 +15,7 @@ public class RowTemplate extends ArrayList<Class<?>> {
 					add(clazz);
 		}
 	}
-	
+	/*
 	public boolean assertRow(@Nullable Row row) {
 		if (row == null)
 		{
@@ -47,7 +47,7 @@ public class RowTemplate extends ArrayList<Class<?>> {
 		}
 		
 		return true;
-	}
+	}*/
 	
 	/* OVERRIDE */
 	

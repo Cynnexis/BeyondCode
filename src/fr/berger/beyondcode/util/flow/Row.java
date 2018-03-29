@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
+@Deprecated
 public class Row extends Observable {
 	
 	private ArrayList<Object> list;

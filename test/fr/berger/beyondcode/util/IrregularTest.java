@@ -31,6 +31,24 @@ class IrregularTest {
 			System.out.println("test_range> [" + i + "]: " + r);
 			Assertions.assertTrue(min <= r && r <= max);
 		}
+		
+		for (int i = 0; i < 1000; i++) {
+			int r = (int) Irregular.range(int.class, min, false, max, true);
+			System.out.println("test_range> [" + i + "]: " + r);
+			Assertions.assertTrue(min < r && r <= max);
+		}
+		
+		for (int i = 0; i < 1000; i++) {
+			int r = (int) Irregular.range(int.class, min, true, max, false);
+			System.out.println("test_range> [" + i + "]: " + r);
+			Assertions.assertTrue(min <= r && r < max);
+		}
+		
+		for (int i = 0; i < 1000; i++) {
+			int r = (int) Irregular.range(int.class, min, false, max, false);
+			System.out.println("test_range> [" + i + "]: " + r);
+			Assertions.assertTrue(min < r && r < max);
+		}
 	}
 	
 	@Test
